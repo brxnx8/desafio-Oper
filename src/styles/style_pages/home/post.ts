@@ -25,6 +25,7 @@ export const PostCard = styled("a", {
 
     img: {
         objectFit: "fill",
+        width: "100%",
     },
 
     p: {
