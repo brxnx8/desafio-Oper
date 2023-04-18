@@ -23,6 +23,10 @@ export const PostCard = styled("a", {
         transform: "scale(1.03)",
     },
 
+    img: {
+        objectFit: "fill",
+    },
+
     p: {
         flex: "1",
     },
