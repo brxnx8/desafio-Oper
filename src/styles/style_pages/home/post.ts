@@ -1,7 +1,8 @@
 import { styled } from "@stitches/react";
 
-export const PostCard = styled("div", {
+export const PostCard = styled("a", {
     backgroundColor: "#fff",
+    color: "black",
     
     display: "flex",
     flexDirection: "column",
@@ -15,6 +16,8 @@ export const PostCard = styled("div", {
     boxShadow: "2px 2px 10px black",
 
     cursor: "pointer",
+
+    textDecoration: "none",
 
     "&:hover": {
         transform: "scale(1.03)",

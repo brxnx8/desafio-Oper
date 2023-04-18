@@ -9,47 +9,47 @@ export default function Home() {
         <HomeContainer>
             <h1>Posts</h1>
             <PostContainer>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
                 </PostCard>
-                <PostCard>
+                <PostCard href="#">
                     <Image src={defaultImage} width={250} alt="" />
                     <p>este e um exemplo de um post</p>
                     <span>tag1, tag2, tag3</span>
