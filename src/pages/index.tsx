@@ -1,7 +1,60 @@
-import { styled } from "../styles";
+import { HomeContainer } from "../styles/style_pages/home";
+import { PostCard, PostContainer } from "../styles/style_pages/home/post";
+import defaultImage from "../assets/default-image.jpg"
+
+import Image from "next/image";
 
 export default function Home() {
     return (
-        <h1>Home</h1>
+        <HomeContainer>
+            <h1>Posts</h1>
+            <PostContainer>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+                <PostCard>
+                    <Image src={defaultImage} width={250} alt="" />
+                    <p>este e um exemplo de um post</p>
+                    <span>tag1, tag2, tag3</span>
+                </PostCard>
+            </PostContainer>
+        </HomeContainer>
     );
 }

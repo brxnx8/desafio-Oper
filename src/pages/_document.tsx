@@ -1,6 +1,8 @@
 import { Html, Head, Main, NextScript } from "next/document";
 import { getCssText } from "../styles";
 
+// Mexendo no document para importar as fontes usadas no projeto
+
 export default function Document() {
     return (
         <Html>

@@ -1,11 +1,11 @@
 import { styled } from ".";
 
 export const Header = styled("header", {
+    backgroundColor: "$blackLight",
+    
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-
-    backgroundColor: "$blackLight",
 
     padding: "1rem",
 
@@ -15,6 +15,11 @@ export const Header = styled("header", {
     },
 
     span: {
-        color: "$greenOper",
+        backgroundColor: "$greenOper",
+        borderRadius: "5px",
+        padding: "0.2rem",
+        color: "black",
+        fontWeight: "700",
+        marginLeft: "0.2rem",
     },
 });
