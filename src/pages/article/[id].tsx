@@ -1,8 +1,9 @@
+import { ArticleContainer } from "../../styles/style_pages/article";
+import { Comment, CommentContainer, CommentForm } from "../../styles/style_pages/article/comments";
 
 import Image from "next/image";
-import { ArticleContainer } from "../../styles/style_pages/article";
-import { CommentContainer } from "../../styles/style_pages/article/comments";
 import { GetStaticProps } from "next";
+
 import { Post } from "..";
 
 interface PostProps {
@@ -33,9 +34,54 @@ export default function Post({ post }: PostProps) {
                
            </section>
            <CommentContainer>
-                <p>comentario</p>
-                <p>comentario</p>
-                <p>comentario</p>
+                <h2>Comentarios:</h2>
+
+                <CommentForm>
+                    <p><strong>Deixe seu comentario:</strong></p>
+                    <label htmlFor="email">Email:</label>
+                    <input type="text" name="email" id="email" required placeholder="Digite seu email..."/>
+                    <textarea placeholder="Comente..." required/>
+                    <button>Comentar</button>
+                </CommentForm>
+
+                <Comment>
+                    <h4>usuario@email.com</h4>
+                    <textarea disabled>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore id placeat eius 
+                        officia iste a dicta officiis eum cum et, iure reprehenderit minima aperiam suscipit iusto 
+                        laboriosam distinctio, saepe cumque.
+                    </textarea>
+                    <footer>
+                        <span>Like</span>
+                        <span>Responda</span>
+                    </footer>
+                </Comment>
+                <Comment>
+                    <h4>usuario@email.com</h4>
+                    <textarea disabled>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore id placeat eius 
+                        officia iste a dicta officiis eum cum et, iure reprehenderit minima aperiam suscipit iusto 
+                        laboriosam distinctio, saepe cumque.
+                    </textarea>
+                    <footer>
+                        <span>Like</span>
+                        <span>Responda</span>
+                    </footer>
+                </Comment>
+                <Comment>
+                    <h4>usuario@email.com</h4>
+                    <textarea disabled>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore id placeat eius 
+                        officia iste a dicta officiis eum cum et, iure reprehenderit minima aperiam suscipit iusto 
+                        laboriosam distinctio, saepe cumque. Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+                        Quisquam, iusto iure molestiae repudiandae doloribus aperiam ratione maiores suscipit 
+                        enim adipisci corrupti nostrum voluptas maxime officia optio, dolor distinctio eos praesentium?
+                    </textarea>
+                    <footer>
+                        <span>Like</span>
+                        <span>Responda</span>
+                    </footer>
+                </Comment>
            </CommentContainer>
         </ArticleContainer>
         

@@ -8,9 +8,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <Header>
-                <p>
+                <a href="/">
                     Oper<span>Blog</span>
-                </p>
+                </a>
             </Header>
             <Component {...pageProps} />
         </>

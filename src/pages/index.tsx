@@ -8,7 +8,8 @@ import { GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
-import { useFetch } from "../libs/functions/useFetch";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export interface Post{
     id: string;
@@ -23,10 +24,29 @@ interface HomeProps{
     recentPosts: Post[];
 }
 
+const api = axios.create({
+    baseURL: "https://news-api.lublot.dev/api/posts"
+})
+
 
 export default function Home({recentPosts}: HomeProps) {
     
-    const {response: posts} = useFetch("https://news-api.lublot.dev/api/posts");
+    const [posts, setPosts] = useState<Post[]>([]);
+    
+    useEffect(() => {
+        const apiData = async () => {
+        try {
+            const res = await api.get("?_limit=20");
+            setPosts(res.data);
+            
+        } catch (error) {
+            window.alert(error)
+        }
+        };
+        apiData();
+    }, []);
+
+    
 
     const [refSlider] = useKeenSlider({
         slides: {
@@ -49,7 +69,7 @@ export default function Home({recentPosts}: HomeProps) {
                         const date = published[0].split("-").reverse().join("/");
 
                         return(
-                            <Link href={`/article/${post.id}`} key={post.id} className="keen-slider__slide">
+                            <Link href={`/article/${post.id}`} key={post.id} className="keen-slider__slide" prefetch={false}>
                                 <PostCard >
                                     <Image src={post.coverImage} width={350} height={250} alt="" />
                                     <p>{post.title}</p>
@@ -74,7 +94,7 @@ export default function Home({recentPosts}: HomeProps) {
                         const date = published[0].split("-").reverse().join("/");
 
                         return(
-                            <Link href={`/article/${post.id}`} key={post.id}>
+                            <Link href={`/article/${post.id}`} key={post.id} prefetch={false}>
                                 <PostCard>
                                     <Image src={post.coverImage} width={350} height={200} alt="" />
                                     <p>{post.title}</p>

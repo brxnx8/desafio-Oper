@@ -9,7 +9,7 @@ export const Header = styled("header", {
 
     padding: "1rem",
 
-    p: {
+    a: {
         fontSize: "3rem",
         color: "white",
     },

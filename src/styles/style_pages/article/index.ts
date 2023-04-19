@@ -37,6 +37,12 @@ export const ArticleContainer = styled("main", {
                 }
             },
         },
+        
+        "& > div": {
+            p: {
+                marginTop: "0.8rem",
+            },
+        },
     },
  
 
