@@ -1,10 +1,13 @@
 import { HomeContainer } from "../styles/style_pages/home";
 import { PostCard, PostContainer } from "../styles/style_pages/home/post";
+
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 
+import { GetStaticProps } from "next";
 import Image from "next/image";
-import { GetServerSideProps } from "next";
+import Link from "next/link";
+
 import { useFetch } from "../libs/functions/useFetch";
 
 export interface Post{
@@ -27,8 +30,8 @@ export default function Home({recentPosts}: HomeProps) {
 
     const [refSlider] = useKeenSlider({
         slides: {
-            perView: 3,
-            spacing: 48,
+            perView: 4,
+            spacing: 20,
 
         },
 
@@ -46,12 +49,14 @@ export default function Home({recentPosts}: HomeProps) {
                         const date = published[0].split("-").reverse().join("/");
 
                         return(
-                            <PostCard href="#" key={post.id} className="keen-slider__slide">
-                                <Image src={post.coverImage} width={350} height={250} alt="" />
-                                <p>{post.title}</p>
-                                <span>{tags}</span>
-                                <span>{date}</span>
-                            </PostCard>
+                            <Link href={`/article/${post.id}`} key={post.id} className="keen-slider__slide">
+                                <PostCard >
+                                    <Image src={post.coverImage} width={350} height={250} alt="" />
+                                    <p>{post.title}</p>
+                                    <span>{tags}</span>
+                                    <span>{date}</span>
+                                </PostCard>
+                            </Link>
                         )
                     })
                 }
@@ -69,12 +74,14 @@ export default function Home({recentPosts}: HomeProps) {
                         const date = published[0].split("-").reverse().join("/");
 
                         return(
-                            <PostCard href="#" key={post.id}>
-                                <Image src={post.coverImage} width={250} height={200} alt="" />
-                                <p>{post.title}</p>
-                                <span>{tags}</span>
-                                <span>{date}</span>
-                            </PostCard>
+                            <Link href={`/article/${post.id}`} key={post.id}>
+                                <PostCard>
+                                    <Image src={post.coverImage} width={350} height={200} alt="" />
+                                    <p>{post.title}</p>
+                                    <span>{tags}</span>
+                                    <span>{date}</span>
+                                </PostCard>
+                            </Link>
                         )
                     }) :
                     <h1>Carregando..</h1>
@@ -84,14 +91,15 @@ export default function Home({recentPosts}: HomeProps) {
     );
 }
 
-export const getServerSideProps:  GetServerSideProps = async () => {
+export const getStaticProps:  GetStaticProps = async () => {
     const res = await fetch("https://news-api.lublot.dev/api/posts?_limit=8&_sort=published&_order=desc");
     const recentPosts = await res.json();
     
     return {
         props: {
             recentPosts,
-        }
+        },
+        revalidate: 3600,
 
     };
 }

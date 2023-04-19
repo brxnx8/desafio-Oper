@@ -11,7 +11,6 @@ export function useFetch (url: string){
         try {
             const res = await fetch(url);
             const posts = await res.json();
-            console.log(res.status)
             setResponse(posts);
             
         } catch (error) {
