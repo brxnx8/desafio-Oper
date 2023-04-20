@@ -11,6 +11,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const api = axios.create({
+    baseURL: "https://news-api.lublot.dev/api/posts",
+})
+
 export interface Post{
     id: string;
     title: string;
@@ -23,11 +27,6 @@ export interface Post{
 interface HomeProps{
     recentPosts: Post[];
 }
-
-const api = axios.create({
-    baseURL: "https://news-api.lublot.dev/api/posts"
-})
-
 
 export default function Home({recentPosts}: HomeProps) {
     
@@ -112,8 +111,17 @@ export default function Home({recentPosts}: HomeProps) {
 }
 
 export const getStaticProps:  GetStaticProps = async () => {
-    const res = await fetch("https://news-api.lublot.dev/api/posts?_limit=8&_sort=published&_order=desc");
-    const recentPosts = await res.json();
+    
+
+    const res = await api.get("?_limit=8&_sort=published&_order=desc");
+    const recentPosts = res.data;
+
+
+    if (!res) {
+        return {
+          notFound: true,
+        }
+      }
     
     return {
         props: {
