@@ -7,12 +7,12 @@ class ListAllCommentsController {
     }
     async handle(req: NextApiRequest, res: NextApiResponse) {
         const { postid } = req.headers;
-        
+
         if (!postid) {
             throw new Error("Need all the data to create a comment");
         }
 
-        return await this.commentRepository.listComments(postid as string)
+        return await this.commentRepository.listComments(postid as string);
     }
 }
 

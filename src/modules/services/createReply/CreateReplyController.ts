@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { CommentRepository } from "../../repository/commentRepository";
 
-
 class CreateReplyController {
     constructor(private commentRepository: CommentRepository) {
         this.commentRepository = commentRepository;
@@ -19,7 +18,6 @@ class CreateReplyController {
             postId,
             commentId,
         });
-
     }
 }
 

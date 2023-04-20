@@ -3,15 +3,15 @@ import { styled } from "@stitches/react";
 export const CommentContainer = styled("div", {
     display: "Flex",
     flexDirection: "column",
-    padding:"0.5rem, 1rem",
+    padding: "0.5rem, 1rem",
 
     marginTop: "4rem",
-})
+});
 
 export const Comment = styled("div", {
     display: "Flex",
     flexDirection: "column",
-    
+
     width: "90%",
     margin: "0.8rem auto",
 
@@ -19,7 +19,7 @@ export const Comment = styled("div", {
         resize: "none",
         color: "black",
         padding: "1rem",
-        height: "5rem"
+        height: "5rem",
     },
 
     footer: {
@@ -29,26 +29,25 @@ export const Comment = styled("div", {
 
         paddingLeft: "0.5rem",
 
-        span:{
+        span: {
             fontSize: "small",
             cursor: "pointer",
 
             "&:hover, &.liked": {
-                color: "$greenOper"
+                color: "$greenOper",
             },
 
             "&.liked:hover": {
-                opacity: "0.7"
-            }
-
-        }
+                opacity: "0.7",
+            },
+        },
     },
-    "&.reply":{
-        marginBottom: "0"
-    }
-})
+    "&.reply": {
+        marginBottom: "0",
+    },
+});
 
-export const CommentForm = styled("form", {    
+export const CommentForm = styled("form", {
     width: "100%",
     marginTop: "1rem",
     paddingTop: "1.5rem",
@@ -56,8 +55,8 @@ export const CommentForm = styled("form", {
 
     input: {
         marginTop: "1rem",
-        marginLeft:"0.4rem",
-        padding: "0.0525rem 0.2rem"
+        marginLeft: "0.4rem",
+        padding: "0.0525rem 0.2rem",
     },
 
     textArea: {
@@ -66,8 +65,8 @@ export const CommentForm = styled("form", {
         padding: "1rem",
         width: "95%",
         height: "6rem",
-        marginTop:"0.5rem",
-        marginBottom:"0.5rem"
+        marginTop: "0.5rem",
+        marginBottom: "0.5rem",
     },
 
     button: {
@@ -79,21 +78,21 @@ export const CommentForm = styled("form", {
         fontWeight: "bold",
         transition: "opacity 0.1s",
 
-        "&:hover":{
-            opacity: "0.9"
-        }
+        "&:hover": {
+            opacity: "0.9",
+        },
     },
     "&.replying": {
         border: 0,
         width: "95%",
         marginLeft: "auto",
-        marginTop: "0"
-    }
-})
+        marginTop: "0",
+    },
+});
 
 export const ReplyContainer = styled("section", {
     width: "90%",
     marginLeft: "auto",
     display: "flex",
-    flexDirection: "column"
-})
+    flexDirection: "column",
+});

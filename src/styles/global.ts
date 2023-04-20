@@ -8,7 +8,7 @@ export const globalStyles = globalCss({
     body: {
         backgroundColor: "$blueOper",
     },
-    "body img" :{
+    "body img": {
         width: 0,
     },
     "body, input, textarea, button": {
@@ -16,5 +16,5 @@ export const globalStyles = globalCss({
     },
     a: {
         textDecoration: "none",
-    }
+    },
 });

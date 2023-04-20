@@ -3,7 +3,7 @@ import { styled } from "@stitches/react";
 export const PostCard = styled("div", {
     backgroundColor: "#fff",
     color: "black",
-    
+
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
@@ -34,9 +34,8 @@ export const PostCard = styled("div", {
     span: {
         color: "grey",
         fontSize: "small",
-    }
-
-})
+    },
+});
 
 export const PostContainer = styled("section", {
     display: "flex",
@@ -44,18 +43,15 @@ export const PostContainer = styled("section", {
     justifyContent: "flex-start",
     gap: "1.5rem 0.5rem",
 
-
     width: "95%",
     margin: "1rem auto",
-    padding: "1rem"
-
-})
+    padding: "1rem",
+});
 
 export const Pagination = styled("span", {
     display: "flex",
     justifyContent: "flex-end",
     gap: "1.5rem",
-
 
     width: "95%",
     margin: "auto",
@@ -70,10 +66,9 @@ export const Pagination = styled("span", {
         fontWeight: "bold",
         cursor: "pointer",
 
-        "&:hover":{
+        "&:hover": {
             opacity: "0.85",
             color: "$greenOper",
-        }
-    }
-
-})
+        },
+    },
+});

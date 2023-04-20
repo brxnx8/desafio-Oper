@@ -2,7 +2,7 @@ import { styled } from ".";
 
 export const Header = styled("header", {
     backgroundColor: "$blackLight",
-    
+
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

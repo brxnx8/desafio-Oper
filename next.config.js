@@ -1,14 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+    reactStrictMode: true,
+    swcMinify: true,
 
-  images: {
-    domains: [
-      'loremflickr.com'
-    ]
-  }
+    images: {
+        domains: ["loremflickr.com"],
+    },
+};
 
-}
-
-module.exports = nextConfig
+module.exports = nextConfig;

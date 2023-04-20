@@ -8,11 +8,8 @@ const connect = async () => {
     return await mongoose.connect(url);
 };
 
-// mongoose.connect(url);
-// let db = mongoose.connection;
-
 const db = {
-    connect
+    connect,
 };
 
 export default db;

@@ -1,5 +1,10 @@
 import { ArticleContainer } from "../../styles/style_pages/article";
-import { Comment, CommentContainer, CommentForm, ReplyContainer } from "../../styles/style_pages/article/comments";
+import {
+    Comment,
+    CommentContainer,
+    CommentForm,
+    ReplyContainer,
+} from "../../styles/style_pages/article/comments";
 
 import Image from "next/image";
 import { GetStaticProps } from "next";
@@ -8,31 +13,31 @@ import { Post } from "..";
 import axios from "axios";
 import { FormEvent, useEffect, useState } from "react";
 
-const api = axios.create()
+const api = axios.create();
 
-interface IReply{
+interface IReply {
     id: string;
     email: string;
     postId: string;
     content: string;
-    commentId: string,
+    commentId: string;
     like: {
-        class: string,
-        content: string
+        class: string;
+        content: string;
     };
 }
 
-interface IComment{
+interface IComment {
     id: string;
     email: string;
     postId: string;
     content: string;
     replies: IReply[];
     like: {
-        class: string,
-        content: string
+        class: string;
+        content: string;
     };
-    isReplying: boolean
+    isReplying: boolean;
 }
 
 interface PostProps {
@@ -50,308 +55,387 @@ interface ReplyForms {
 }
 
 export default function Post({ post }: PostProps) {
-
     const tags = post.tags.join(", ");
     const published = post.published.split("T");
     const date = published[0].split("-").reverse().join("/");
     const [comments, setComments] = useState<IComment[]>([]);
-    const [commentForm, setCommentForm] = useState<CommentForms>({content: '', email: ''});
-    const [replyForm, setReplyForm] = useState<ReplyForms>({contentReply: '', emailReply: ''});
-   
+    const [commentForm, setCommentForm] = useState<CommentForms>({
+        content: "",
+        email: "",
+    });
+    const [replyForm, setReplyForm] = useState<ReplyForms>({
+        contentReply: "",
+        emailReply: "",
+    });
 
-    function handleLike(commentId: string, replyId?: string){
-        
-        const commentChange = comments.find(comment => comment.id === commentId);
+    function handleLike(commentId: string, replyId?: string) {
+        const commentChange = comments.find(
+            (comment) => comment.id === commentId
+        );
 
-        setComments(state => {
-            return state.map( comment => {
-                if(comment === commentChange){
-                    if(!replyId){
-                        if(comment.like.content === "Like"){
-                            return{
+        setComments((state) => {
+            return state.map((comment) => {
+                if (comment === commentChange) {
+                    if (!replyId) {
+                        if (comment.like.content === "Like") {
+                            return {
                                 ...comment,
                                 like: {
                                     class: "liked",
-                                    content: "Liked"
-                                }
-                            }
-                        }else{
-                            return{
+                                    content: "Liked",
+                                },
+                            };
+                        } else {
+                            return {
                                 ...comment,
                                 like: {
                                     class: "",
-                                    content: "Like"
-                                }
-                            }
+                                    content: "Like",
+                                },
+                            };
                         }
-                    }else{
-                        const replies = comment.replies.map(reply => {
-                            if(reply.id === replyId){
-                                if(reply.like.content === "Like"){
-                                    return{
+                    } else {
+                        const replies = comment.replies.map((reply) => {
+                            if (reply.id === replyId) {
+                                if (reply.like.content === "Like") {
+                                    return {
                                         ...reply,
                                         like: {
                                             class: "liked",
-                                            content: "Liked"
-                                        }
-                                    }
-                                }else{
-                                    return{
+                                            content: "Liked",
+                                        },
+                                    };
+                                } else {
+                                    return {
                                         ...reply,
                                         like: {
                                             class: "",
-                                            content: "Like"
-                                        }
-                                    }
+                                            content: "Like",
+                                        },
+                                    };
                                 }
                             }
-                            return reply
-                        })
-                        return{
+                            return reply;
+                        });
+                        return {
                             ...comment,
                             replies,
-                        }
+                        };
                     }
                 }
-                return comment
-            })
-            
-        })
-
-        
-
+                return comment;
+            });
+        });
     }
 
-    function handleReplying(id: string){
-        setComments(state => {
-            return state.map(comment => {
-                if(comment.id === id){
-                    if(comment.isReplying){
-                        return{
+    function handleReplying(id: string) {
+        setComments((state) => {
+            return state.map((comment) => {
+                if (comment.id === id) {
+                    if (comment.isReplying) {
+                        return {
                             ...comment,
-                            isReplying: false
+                            isReplying: false,
                         };
-                    }else{
-                       return {
-                        ...comment,
-                        isReplying: true
-                       };
+                    } else {
+                        return {
+                            ...comment,
+                            isReplying: true,
+                        };
                     }
-                }else{
+                } else {
                     return comment;
                 }
-            })
-        })
+            });
+        });
     }
 
     function handleChangeFormValues(event) {
         const name = event.target.name;
         const value = event.target.value;
 
-        if(!name.includes("Reply")){
-            setCommentForm(state => {
+        if (!name.includes("Reply")) {
+            setCommentForm((state) => {
                 return {
                     ...state,
                     [name]: value,
-                }
+                };
             });
-        }else{
-            setReplyForm(state => {
+        } else {
+            setReplyForm((state) => {
                 return {
                     ...state,
                     [name]: value,
-                }
+                };
             });
         }
-
-        
-
     }
 
-    function handleSubmitComment(event: FormEvent, commentId?: string){
+    function handleSubmitComment(event: FormEvent, commentId?: string) {
         // event.preventDefault()
-        
+
         const apiData = async () => {
             try {
-               
-                if(!commentId){ 
-                    const data ={
+                if (!commentId) {
+                    const data = {
                         email: commentForm.email,
                         content: commentForm.content,
                         postId: post.id,
-                        commentId: commentId
-                    }
+                        commentId: commentId,
+                    };
                     await api.post("http://localhost:3000/api/comment", data);
                     // setCommentForm({content:"", email: ""});
-                }
-                else{
-                    const data ={
+                } else {
+                    const data = {
                         email: replyForm.emailReply,
                         content: replyForm.contentReply,
                         postId: post.id,
-                        commentId: commentId
-                    }
+                        commentId: commentId,
+                    };
                     await api.post("http://localhost:3000/api/reply", data);
                     // setReplyForm({contentReply:"", emailReply: ""});
                 }
-               
-                
             } catch (error) {
-                window.alert(error)
+                window.alert(error);
             }
         };
         apiData();
-
-        
     }
 
     useEffect(() => {
         const apiData = async () => {
             try {
                 const config = {
-                    headers:{
-                      postid: post.id,
-                    }
-                  };
-                const res = await api.get("http://localhost:3000/api/comment", config);
-                const data = res.data.map( comment => {
-                    const replies = comment.replies.map(reply => {
-                        return{
+                    headers: {
+                        postid: post.id,
+                    },
+                };
+                const res = await api.get(
+                    "http://localhost:3000/api/comment",
+                    config
+                );
+                const data = res.data.map((comment) => {
+                    const replies = comment.replies.map((reply) => {
+                        return {
                             ...reply,
                             like: {
                                 class: "",
-                                content: "Like"
+                                content: "Like",
                             },
-                        }
-                    })
-                    
-                    return{
+                        };
+                    });
+
+                    return {
                         ...comment,
                         replies,
                         like: {
                             class: "",
-                            content: "Like"
+                            content: "Like",
                         },
-                        isReplying: false
-                    }
-                })
+                        isReplying: false,
+                    };
+                });
                 setComments(data);
-                
             } catch (error) {
-                window.alert(error)
+                window.alert(error);
             }
         };
         apiData();
-    }, [])
+    }, []);
 
     return (
         <ArticleContainer>
-           <section>
-               <aside>
-                   <Image src={post.coverImage} alt="" width={300} height={300}/>
-                   <div>
-                       <p>{tags}</p>
-                       <p>Autor: {post.author}</p>
-                       <p>Atualizado em: {date}</p>
-                   </div>
-               </aside>
-               <div>
-                   <h1>{post.title}</h1>
-                   <p>{post.content}</p>
-               </div>
-               
-           </section>
-           <CommentContainer>
+            <section>
+                <aside>
+                    <Image
+                        src={post.coverImage}
+                        alt=""
+                        width={300}
+                        height={300}
+                    />
+                    <div>
+                        <p>{tags}</p>
+                        <p>Autor: {post.author}</p>
+                        <p>Atualizado em: {date}</p>
+                    </div>
+                </aside>
+                <div>
+                    <h1>{post.title}</h1>
+                    <p>{post.content}</p>
+                </div>
+            </section>
+            <CommentContainer>
                 <h2>Comentarios:</h2>
 
                 <CommentForm onSubmit={handleSubmitComment}>
-                    <p><strong>Deixe seu comentario:</strong></p>
+                    <p>
+                        <strong>Deixe seu comentario:</strong>
+                    </p>
                     <label htmlFor="email">Email:</label>
-                    <input type="text" name="email" id="email" required placeholder="Digite seu email..." onChange={handleChangeFormValues} value={commentForm.email}/>
-                    <textarea name="content" placeholder="Comente..." required onChange={handleChangeFormValues} value={commentForm.content}/>
+                    <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        required
+                        placeholder="Digite seu email..."
+                        onChange={handleChangeFormValues}
+                        value={commentForm.email}
+                    />
+                    <textarea
+                        name="content"
+                        placeholder="Comente..."
+                        required
+                        onChange={handleChangeFormValues}
+                        value={commentForm.content}
+                    />
                     <button>Comentar</button>
                 </CommentForm>
-                {
-                    comments.length > 0 &&
-                     
-                    comments.map(comment => {
-                        return(
+                {comments.length > 0 &&
+                    comments.map((comment) => {
+                        return (
                             <div key={comment.id}>
                                 <Comment>
                                     <h4>{comment.email}</h4>
-                                    <textarea disabled value={comment.content} />
+                                    <textarea
+                                        disabled
+                                        value={comment.content}
+                                    />
                                     <footer>
-                                        <span className={comment.like.class} onClick={() => {handleLike(comment.id)}}>{comment.like.content}</span>
-                                        <span onClick={() => {handleReplying(comment.id)}}>Responda</span>
+                                        <span
+                                            className={comment.like.class}
+                                            onClick={() => {
+                                                handleLike(comment.id);
+                                            }}
+                                        >
+                                            {comment.like.content}
+                                        </span>
+                                        <span
+                                            onClick={() => {
+                                                handleReplying(comment.id);
+                                            }}
+                                        >
+                                            Responda
+                                        </span>
                                     </footer>
                                 </Comment>
 
                                 <ReplyContainer>
-                                    {comment.replies.length > 0 &&
+                                    {comment.replies.length > 0 && (
                                         <>
-                                        <h5>Respostas:</h5>
-                                        {comment.replies.map(reply => {
-                                            return(
-                                                <Comment key={reply.id} className="reply">
-                                                    <h4>{reply.email}</h4>
-                                                    <textarea disabled value={reply.content} />
-                                                    <footer>
-                                                        <span className={reply.like.class} onClick={() => {handleLike(reply.commentId, reply.id)}}>{reply.like.content}</span>
-                                                    </footer>
-                                                </Comment>
-                                            )
-                                        })
-                                        }
+                                            <h5>Respostas:</h5>
+                                            {comment.replies.map((reply) => {
+                                                return (
+                                                    <Comment
+                                                        key={reply.id}
+                                                        className="reply"
+                                                    >
+                                                        <h4>{reply.email}</h4>
+                                                        <textarea
+                                                            disabled
+                                                            value={
+                                                                reply.content
+                                                            }
+                                                        />
+                                                        <footer>
+                                                            <span
+                                                                className={
+                                                                    reply.like
+                                                                        .class
+                                                                }
+                                                                onClick={() => {
+                                                                    handleLike(
+                                                                        reply.commentId,
+                                                                        reply.id
+                                                                    );
+                                                                }}
+                                                            >
+                                                                {
+                                                                    reply.like
+                                                                        .content
+                                                                }
+                                                            </span>
+                                                        </footer>
+                                                    </Comment>
+                                                );
+                                            })}
                                         </>
-                                    }
+                                    )}
 
-                                    {comment.isReplying &&
-                                        <CommentForm className="replying" onSubmit={event => handleSubmitComment(event, comment.id)}>
-                                            <p><strong>Deixe sua resposta:</strong></p>
-                                            <label htmlFor="email">Email:</label>
-                                            <input type="text" name="emailReply" id="email" required placeholder="Digite seu email..." onChange={handleChangeFormValues} value={replyForm.emailReply}/>
-                                            <textarea name="contentReply" placeholder="Comente..." required onChange={handleChangeFormValues} value={replyForm.contentReply}/>
+                                    {comment.isReplying && (
+                                        <CommentForm
+                                            className="replying"
+                                            onSubmit={(event) =>
+                                                handleSubmitComment(
+                                                    event,
+                                                    comment.id
+                                                )
+                                            }
+                                        >
+                                            <p>
+                                                <strong>
+                                                    Deixe sua resposta:
+                                                </strong>
+                                            </p>
+                                            <label htmlFor="email">
+                                                Email:
+                                            </label>
+                                            <input
+                                                type="text"
+                                                name="emailReply"
+                                                id="email"
+                                                required
+                                                placeholder="Digite seu email..."
+                                                onChange={
+                                                    handleChangeFormValues
+                                                }
+                                                value={replyForm.emailReply}
+                                            />
+                                            <textarea
+                                                name="contentReply"
+                                                placeholder="Comente..."
+                                                required
+                                                onChange={
+                                                    handleChangeFormValues
+                                                }
+                                                value={replyForm.contentReply}
+                                            />
                                             <button>Comentar</button>
                                         </CommentForm>
-                                    }
+                                    )}
                                 </ReplyContainer>
                             </div>
-                        )
-                    })
-                }
-
-                
-                
-           </CommentContainer>
+                        );
+                    })}
+            </CommentContainer>
         </ArticleContainer>
-        
     );
 }
 
 export async function getStaticPaths() {
     return {
-      paths: [],
-      fallback: "blocking",
-    }
-  }
+        paths: [],
+        fallback: "blocking",
+    };
+}
 
-export const getStaticProps: GetStaticProps<any, {id: string}> = async ({ params }) => {
-
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
+    params,
+}) => {
     const id = params.id;
-    
+
     const res = await api.get(`https://news-api.lublot.dev/api/posts/${id}`);
     const post = res.data;
 
     if (!res) {
         return {
-          notFound: true,
-        }
-      }
+            notFound: true,
+        };
+    }
 
-    return{
+    return {
         props: {
-            post
+            post,
         },
         revalidate: 3600,
-    }
-}
+    };
+};

@@ -16,7 +16,7 @@ class CreateCommentController {
             email,
             content,
             postId,
-        })
+        });
     }
 }
 
