@@ -145,7 +145,7 @@ export default function Home({ recentPosts }: HomeProps) {
                 )}
             </PostContainer>
             <Pagination>
-                <div onClick={prevPage}>Ant</div>
+                <div onClick={prevPage}>Ante</div>
                 <div onClick={nextPage}>Prox</div>
             </Pagination>
         </HomeContainer>

@@ -273,7 +273,7 @@ export default function Post({ post }: PostProps) {
                     </p>
                     <label htmlFor="email">Email:</label>
                     <input
-                        type="text"
+                        type="email"
                         name="email"
                         id="email"
                         required
@@ -380,7 +380,7 @@ export default function Post({ post }: PostProps) {
                                                 Email:
                                             </label>
                                             <input
-                                                type="text"
+                                                type="email"
                                                 name="emailReply"
                                                 id="email"
                                                 required
