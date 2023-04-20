@@ -1,4 +1,4 @@
-import { HomeContainer } from "../styles/style_pages/home";
+import { HomeContainer, PostRecentContainer } from "../styles/style_pages/home";
 import { PostCard, PostContainer } from "../styles/style_pages/home/post";
 
 import { useKeenSlider } from "keen-slider/react";
@@ -35,7 +35,7 @@ export default function Home({recentPosts}: HomeProps) {
     useEffect(() => {
         const apiData = async () => {
         try {
-            const res = await api.get("?_limit=20");
+            const res = await api.get("?_limit=30&_sort=published&_order=desc&_start=8");
             setPosts(res.data);
             
         } catch (error) {
@@ -59,7 +59,7 @@ export default function Home({recentPosts}: HomeProps) {
     return (
         <HomeContainer>
             <h1>Posts recentes</h1>
-            <section ref={refSlider} className="keen-slider">
+            <PostRecentContainer ref={refSlider} className="keen-slider">
                 {
                     recentPosts.map(post => {
 
@@ -79,10 +79,10 @@ export default function Home({recentPosts}: HomeProps) {
                         )
                     })
                 }
-            </section>
+            </PostRecentContainer>
 
 
-            <h1>Posts</h1>
+            <h1>Principais Posts</h1>
             <PostContainer>
                 {
                     posts.length > 0 ?

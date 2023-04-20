@@ -1,23 +1,21 @@
-import { dataBase } from "../../libs/dataBase/mongodb";
-import { Comment, comments } from "../models/comment";
-import {
-    ICreateCommentDTO,
-    IcommentRepository,
-} from "./InterfaceCommentRespository";
+import db from "../../libs/dataBase/mongodb";
+import comments from "../models/Comments";
+
 import { v4 as uuidv4 } from "uuid";
 
-class CommentRepository implements IcommentRepository {
+class CommentRepository{
+
+
     
     async createComment({
         email,
         content,
         postId,
-        postTitle,
-    }: ICreateCommentDTO): Promise<any> {
+    }) {
         
-        dataBase.connect()
+        db.connect();
         
-        const replys = [];
+        const replies = [];
         const id = uuidv4();
         const date = new Date();
         const created_at = date.toString();
@@ -27,8 +25,7 @@ class CommentRepository implements IcommentRepository {
             email,
             content,
             postId,
-            postTitle,
-            replys,
+            replies,
             created_at,
         });
         return await comment.save();
@@ -39,13 +36,11 @@ class CommentRepository implements IcommentRepository {
         email,
         content,
         postId,
-        postTitle,
         commentId,
-    }: ICreateCommentDTO) {
+    }) {
         
-        dataBase.connect()
-       
-        const replys = [];
+        db.connect();
+        
         const id = uuidv4();
         const date = new Date();
         const created_at = date.toString();
@@ -55,22 +50,21 @@ class CommentRepository implements IcommentRepository {
             email,
             content,
             postId,
-            postTitle,
-            replys,
+            commentId,
             created_at,
         });
         const doc = await comments.findOne({id: commentId}); 
         console.log(doc)
-        doc.replys = [...doc.replys, comment];
+        doc.replies = [...doc.replies, comment];
         await doc.save();
 
         return doc;
         
     }
 
-    async listComments(postId: string):  Promise<any> {
-        
-        dataBase.connect()
+    async listComments(postId: string) {
+        db.connect();
+
         const doc = await comments.find({postId: postId});
         
         return doc;

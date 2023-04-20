@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { createCommentController } from "../../modules/services/createComment";
 import { listAllCommentsController } from "../../modules/services/listAllComments";
 
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if(req.method === "POST"){
         await createCommentController.handle(req, res)

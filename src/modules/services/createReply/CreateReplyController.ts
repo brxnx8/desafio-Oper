@@ -1,24 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { CreateReplyService } from "./CreateReplyService";
+import { CommentRepository } from "../../repository/commentRepository";
+
 
 class CreateReplyController {
-    constructor(private createReplyService: CreateReplyService) {
-        this.createReplyService = createReplyService;
+    constructor(private commentRepository: CommentRepository) {
+        this.commentRepository = commentRepository;
     }
     async handle(req: NextApiRequest, res: NextApiResponse) {
-        const { email, content, postId, postTitle, commentId } = req.body;
+        const { email, content, postId, commentId } = req.body;
 
-        if (!email || !content || !postId || !postTitle || !commentId) {
+        if (!email || !content || !postId || !commentId) {
             throw new Error("Need all the data to create a comment");
         }
 
-        return await this.createReplyService.execute({
+        return await this.commentRepository.createReply({
             email,
             content,
             postId,
-            postTitle,
             commentId,
         });
+
     }
 }
 

@@ -173,18 +173,26 @@ export default function Post({ post }: PostProps) {
         
         const apiData = async () => {
             try {
-                const data ={
-                    email: commentForm.email,
-                    content: commentForm.content,
-                    postId: post.id,
-	                postTitle: post.title,
-                    commentId
-                }
-                if(!commentId){
+               
+                if(!commentId){ 
+                    const data ={
+                        email: commentForm.email,
+                        content: commentForm.content,
+                        postId: post.id,
+                        commentId: commentId
+                    }
                     await api.post("http://localhost:3000/api/comment", data);
+                    setCommentForm({content:"", email: ""});
                 }
                 else{
+                    const data ={
+                        email: replyForm.emailReply,
+                        content: replyForm.contentReply,
+                        postId: post.id,
+                        commentId: commentId
+                    }
                     await api.post("http://localhost:3000/api/reply", data);
+                    setReplyForm({contentReply:"", emailReply: ""});
                 }
                
                 
@@ -207,13 +215,9 @@ export default function Post({ post }: PostProps) {
                   };
                 const res = await api.get("http://localhost:3000/api/comment", config);
                 const data = res.data.map( comment => {
-                    const replies = comment.replys.map(reply => {
+                    const replies = comment.replies.map(reply => {
                         return{
-                            id: reply.id,
-                            email: reply.email,
-                            postId: reply.postId,
-                            content: reply.content,
-                            commentId: reply.commentId,
+                            ...reply,
                             like: {
                                 class: "",
                                 content: "Like"
@@ -222,10 +226,7 @@ export default function Post({ post }: PostProps) {
                     })
                     
                     return{
-                        id: comment.id,
-                        email: comment.email,
-                        postId: comment.postId,
-                        content: comment.content,
+                        ...comment,
                         replies,
                         like: {
                             class: "",
@@ -275,8 +276,8 @@ export default function Post({ post }: PostProps) {
                     : 
                     comments.map(comment => {
                         return(
-                            <>
-                                <Comment key={comment.id}>
+                            <div key={comment.id}>
+                                <Comment>
                                     <h4>{comment.email}</h4>
                                     <textarea disabled value={comment.content} />
                                     <footer>
@@ -314,7 +315,7 @@ export default function Post({ post }: PostProps) {
                                         </CommentForm>
                                     }
                                 </ReplyContainer>
-                            </>
+                            </div>
                         )
                     })
                 }

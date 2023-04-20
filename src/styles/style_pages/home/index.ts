@@ -7,3 +7,10 @@ export const HomeContainer = styled("main", {
     width: "90%",
     margin: "auto",
 })
+
+export const PostRecentContainer = styled("section", {
+    display: "flex",
+    
+    width: "30%",
+    margin: "auto",
+})

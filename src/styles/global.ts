@@ -8,6 +8,9 @@ export const globalStyles = globalCss({
     body: {
         backgroundColor: "$blueOper",
     },
+    "body img" :{
+        width: 0,
+    },
     "body, input, textarea, button": {
         fontFamily: "Poppins",
     },
