@@ -169,7 +169,7 @@ export default function Post({ post }: PostProps) {
     }
 
     function handleSubmitComment(event: FormEvent, commentId?: string){
-        event.preventDefault()
+        // event.preventDefault()
         
         const apiData = async () => {
             try {
@@ -182,7 +182,7 @@ export default function Post({ post }: PostProps) {
                         commentId: commentId
                     }
                     await api.post("http://localhost:3000/api/comment", data);
-                    setCommentForm({content:"", email: ""});
+                    // setCommentForm({content:"", email: ""});
                 }
                 else{
                     const data ={
@@ -192,7 +192,7 @@ export default function Post({ post }: PostProps) {
                         commentId: commentId
                     }
                     await api.post("http://localhost:3000/api/reply", data);
-                    setReplyForm({contentReply:"", emailReply: ""});
+                    // setReplyForm({contentReply:"", emailReply: ""});
                 }
                
                 
@@ -272,8 +272,8 @@ export default function Post({ post }: PostProps) {
                     <button>Comentar</button>
                 </CommentForm>
                 {
-                    comments.length < 1 ? <h4>carregando comentarios...</h4> 
-                    : 
+                    comments.length > 0 &&
+                     
                     comments.map(comment => {
                         return(
                             <div key={comment.id}>

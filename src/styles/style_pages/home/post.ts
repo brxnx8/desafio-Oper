@@ -46,7 +46,34 @@ export const PostContainer = styled("section", {
 
 
     width: "95%",
-    margin: "auto",
+    margin: "1rem auto",
     padding: "1rem"
+
+})
+
+export const Pagination = styled("span", {
+    display: "flex",
+    justifyContent: "flex-end",
+    gap: "1.5rem",
+
+
+    width: "95%",
+    margin: "auto",
+    padding: "1rem",
+
+    "& > div": {
+        border: "none",
+        backgroundColor: "White",
+        color: "Black",
+        padding: "0.5rem 1rem",
+        borderRadius: "3px",
+        fontWeight: "bold",
+        cursor: "pointer",
+
+        "&:hover":{
+            opacity: "0.85",
+            color: "$greenOper",
+        }
+    }
 
 })

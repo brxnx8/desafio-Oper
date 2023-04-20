@@ -1,5 +1,5 @@
 import { HomeContainer, PostRecentContainer } from "../styles/style_pages/home";
-import { PostCard, PostContainer } from "../styles/style_pages/home/post";
+import { Pagination, PostCard, PostContainer } from "../styles/style_pages/home/post";
 
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
@@ -31,11 +31,34 @@ interface HomeProps{
 export default function Home({recentPosts}: HomeProps) {
     
     const [posts, setPosts] = useState<Post[]>([]);
+    const [currentPage, setCurrentPage] = useState(1)
+
+    function nextPage(){
+        setCurrentPage(state => {
+            if(state < 50){
+                return state + 1;
+            }else{
+                return state;
+            }
+            
+        })
+    }
+
+    function prevPage(){
+        setCurrentPage(state => {
+            if(state > 1){
+                return state - 1;
+            }else{
+                return state;
+            }
+            
+        })
+    }
     
     useEffect(() => {
         const apiData = async () => {
         try {
-            const res = await api.get("?_limit=30&_sort=published&_order=desc&_start=8");
+            const res = await api.get(`?_page=${currentPage}&_limit=20&_sort=title&_order=desc`);
             setPosts(res.data);
             
         } catch (error) {
@@ -43,7 +66,7 @@ export default function Home({recentPosts}: HomeProps) {
         }
         };
         apiData();
-    }, []);
+    }, [currentPage]);
 
     
 
@@ -104,8 +127,9 @@ export default function Home({recentPosts}: HomeProps) {
                         )
                     }) :
                     <h1>Carregando..</h1>
-                }
+                }    
             </PostContainer>
+            <Pagination><div onClick={prevPage}>Ant</div><div onClick={nextPage}>Prox</div></Pagination>
         </HomeContainer>
     );
 }

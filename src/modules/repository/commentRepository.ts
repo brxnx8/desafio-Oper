@@ -3,6 +3,19 @@ import comments from "../models/Comments";
 
 import { v4 as uuidv4 } from "uuid";
 
+export interface CommentsPropsDTO{
+    email: string;
+    content: string;
+    postId: string;
+}
+
+export interface RepliesPropsDTO{
+    email: string;
+    content: string;
+    postId: string;
+    commentId: string;
+}
+
 class CommentRepository{
 
 
@@ -11,7 +24,7 @@ class CommentRepository{
         email,
         content,
         postId,
-    }) {
+    }: CommentsPropsDTO): Promise<Comment>{
         
         db.connect();
         
@@ -37,7 +50,7 @@ class CommentRepository{
         content,
         postId,
         commentId,
-    }) {
+    }: RepliesPropsDTO): Promise<Comment>{
         
         db.connect();
         
@@ -53,8 +66,8 @@ class CommentRepository{
             commentId,
             created_at,
         });
+        // @ts-ignore: Unreachable code error <O erro se da por conta dos tipos da biblioteca mongoose>
         const doc = await comments.findOne({id: commentId}); 
-        console.log(doc)
         doc.replies = [...doc.replies, comment];
         await doc.save();
 
@@ -62,9 +75,9 @@ class CommentRepository{
         
     }
 
-    async listComments(postId: string) {
+    async listComments(postId: string): Promise<Comment[]>{
         db.connect();
-
+        // @ts-ignore: Unreachable code error <O erro se da por conta dos tipos da biblioteca mongoose>
         const doc = await comments.find({postId: postId});
         
         return doc;
