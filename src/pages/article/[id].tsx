@@ -19,13 +19,49 @@ interface CommentForms {
     content: string;
 }
 
+interface IsLiked {
+    class: string;
+    content: string;
+}
+
 export default function Post({ post }: PostProps) {
 
     const tags = post.tags.join(", ");
     const published = post.published.split("T");
     const date = published[0].split("-").reverse().join("/");
     const [comments, setComments] = useState([]);
-    const [commentForm, setCommentForm] = useState({} as CommentForms)
+    const [commentForm, setCommentForm] = useState({} as CommentForms);
+   
+
+    function handleLike(commentId){
+        
+        setComments(state => {
+            return state.map(comment => {
+                if(comment.id === commentId){
+                    if(comment.like.content === 'Like'){
+                        return{
+                            ...comment,
+                            like: {
+                                class: "liked",
+                                content: "Liked"
+                            }
+                        };
+                    }else{
+                       return {
+                        ...comment,
+                        like: {
+                            class: "",
+                            content: "Like"
+                        }
+                       };
+                    }
+                }else{
+                    return comment;
+                }
+            })
+        })
+
+    }
 
     function handleChangeFormValues(event) {
         const name = event.target.name;
@@ -68,7 +104,20 @@ export default function Post({ post }: PostProps) {
                     }
                   };
                 const res = await api.get("http://localhost:3000/api/comment", config);
-                setComments(res.data);
+                const data = res.data.map( comment => {
+                    return{
+                        id: comment.id,
+                        email: comment.email,
+                        postId: comment.postId,
+                        content: comment.content,
+                        replys: comment.replys,
+                        like: {
+                            class: "",
+                            content: "Like"
+                        }
+                    }
+                })
+                setComments(data);
                 
             } catch (error) {
                 window.alert(error)
@@ -112,7 +161,7 @@ export default function Post({ post }: PostProps) {
                                 <h4>{comment.email}</h4>
                                 <textarea disabled value={comment.content} />
                                 <footer>
-                                    <span>Like</span>
+                                    <span className={comment.like.class} onClick={() => {handleLike(comment.id)}}>{comment.like.content}</span>
                                     <span>Responda</span>
                                 </footer>
                             </Comment>

@@ -34,9 +34,14 @@ export const Comment = styled("div", {
             fontSize: "small",
             cursor: "pointer",
 
-            "&:hover": {
+            "&:hover, &.liked": {
                 color: "$greenOper"
+            },
+
+            "&.liked:hover": {
+                opacity: "0.7"
             }
+
         }
     }
 })
