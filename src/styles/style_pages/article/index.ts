@@ -13,7 +13,7 @@ export const ArticleContainer = styled("main", {
 
     border: 0,
 
-    section: {
+    "& > section": {
         display: "grid", 
         gridTemplateColumns: "300px 1fr",
         columnGap: "1rem",

@@ -13,8 +13,7 @@ export const Comment = styled("div", {
     flexDirection: "column",
     
     width: "90%",
-    margin: "auto",
-    marginTop: "1rem",
+    margin: "0.8rem auto",
 
     textArea: {
         resize: "none",
@@ -43,6 +42,9 @@ export const Comment = styled("div", {
             }
 
         }
+    },
+    "&.reply":{
+        marginBottom: "0"
     }
 })
 
@@ -80,5 +82,18 @@ export const CommentForm = styled("form", {
         "&:hover":{
             opacity: "0.9"
         }
+    },
+    "&.replying": {
+        border: 0,
+        width: "95%",
+        marginLeft: "auto",
+        marginTop: "0"
     }
+})
+
+export const ReplyContainer = styled("section", {
+    width: "90%",
+    marginLeft: "auto",
+    display: "flex",
+    flexDirection: "column"
 })

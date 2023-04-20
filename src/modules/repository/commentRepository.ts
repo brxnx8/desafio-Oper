@@ -44,7 +44,7 @@ class CommentRepository implements IcommentRepository {
     }: ICreateCommentDTO) {
         
         dataBase.connect()
-        
+       
         const replys = [];
         const id = uuidv4();
         const date = new Date();
@@ -59,7 +59,8 @@ class CommentRepository implements IcommentRepository {
             replys,
             created_at,
         });
-        const doc = await comments.findOne({id: commentId});
+        const doc = await comments.findOne({id: commentId}); 
+        console.log(doc)
         doc.replys = [...doc.replys, comment];
         await doc.save();
 
