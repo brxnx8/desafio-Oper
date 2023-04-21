@@ -68,64 +68,79 @@ export default function Post({ post }: PostProps) {
         emailReply: "",
     });
 
-    function handleLike(commentId: string, replyId?: string) {
-        const commentChange = comments.find(
+    function handleCommentLike(commentId: string) {
+        const commentToChange = comments.find(
             (comment) => comment.id === commentId
         );
 
         setComments((state) => {
             return state.map((comment) => {
-                if (comment === commentChange) {
-                    if (!replyId) {
-                        if (comment.like.content === "Like") {
-                            return {
-                                ...comment,
-                                like: {
-                                    class: "liked",
-                                    content: "Liked",
-                                },
-                            };
-                        } else {
-                            return {
-                                ...comment,
-                                like: {
-                                    class: "",
-                                    content: "Like",
-                                },
-                            };
-                        }
-                    } else {
-                        const replies = comment.replies.map((reply) => {
-                            if (reply.id === replyId) {
-                                if (reply.like.content === "Like") {
-                                    return {
-                                        ...reply,
-                                        like: {
-                                            class: "liked",
-                                            content: "Liked",
-                                        },
-                                    };
-                                } else {
-                                    return {
-                                        ...reply,
-                                        like: {
-                                            class: "",
-                                            content: "Like",
-                                        },
-                                    };
-                                }
-                            }
-                            return reply;
-                        });
-                        return {
+                if (comment === commentToChange) {
+                    return (
+                        comment.like.content === "Like" ? 
+                        {
                             ...comment,
-                            replies,
-                        };
-                    }
+                            like: {
+                                class: "liked",
+                                content: "Liked",
+                            },
+                        } 
+                        : 
+                        {
+                            ...comment,
+                            like: {
+                                class: "",
+                                content: "Like",
+                            },
+                        }
+                    )
                 }
                 return comment;
             });
         });
+    }
+
+    function handleReplyLike(commentId: string, replyId: string){
+        const commentToChange = comments.find(
+            (comment) => comment.id === commentId
+        );
+        
+        setComments(state => {
+            return state.map( comment => {
+                if(comment === commentToChange){
+                    const replies = comment.replies.map( reply => {
+                        if(reply.id === replyId){
+                            return (
+                                reply.like.content === "Like" ? 
+                                {
+                                    ...reply,
+                                    like: {
+                                        class: "liked",
+                                        content: "Liked",
+                                    },
+                                } 
+                                : 
+                                {
+                                    ...reply,
+                                    like: {
+                                        class: "",
+                                        content: "Like",
+                                    },
+                                }
+                            )
+                        }
+                        return reply;
+                    })
+                    return {
+                        ...comment,
+                        replies
+                    }
+                }
+                return comment;
+            })
+
+        })
+        
     }
 
     function handleReplying(id: string) {
@@ -304,7 +319,7 @@ export default function Post({ post }: PostProps) {
                                         <span
                                             className={comment.like.class}
                                             onClick={() => {
-                                                handleLike(comment.id);
+                                                handleCommentLike(comment.id);
                                             }}
                                         >
                                             {comment.like.content}
@@ -343,7 +358,7 @@ export default function Post({ post }: PostProps) {
                                                                         .class
                                                                 }
                                                                 onClick={() => {
-                                                                    handleLike(
+                                                                    handleReplyLike(
                                                                         reply.commentId,
                                                                         reply.id
                                                                     );
