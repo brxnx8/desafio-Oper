@@ -67,6 +67,7 @@ export default function Post({ post }: PostProps) {
         contentReply: "",
         emailReply: "",
     });
+    const [isReload, setIsReload] = useState(false);
 
     function handleCommentLike(commentId: string) {
         const commentToChange = comments.find(
@@ -187,7 +188,7 @@ export default function Post({ post }: PostProps) {
     }
 
     function handleSubmitComment(event: FormEvent, commentId?: string) {
-        // event.preventDefault()
+        event.preventDefault()
 
         const apiData = async () => {
             try {
@@ -199,7 +200,8 @@ export default function Post({ post }: PostProps) {
                         commentId: commentId,
                     };
                     await api.post("http://localhost:3000/api/comment", data);
-                    // setCommentForm({content:"", email: ""});
+                    setIsReload(state => {return state ? false : true});
+                    setCommentForm({content:"", email: ""});
                 } else {
                     const data = {
                         email: replyForm.emailReply,
@@ -208,7 +210,8 @@ export default function Post({ post }: PostProps) {
                         commentId: commentId,
                     };
                     await api.post("http://localhost:3000/api/reply", data);
-                    // setReplyForm({contentReply:"", emailReply: ""});
+                    setIsReload(state => {return state ? false : true});
+                    setReplyForm({contentReply:"", emailReply: ""});
                 }
             } catch (error) {
                 window.alert(error);
@@ -252,11 +255,11 @@ export default function Post({ post }: PostProps) {
                 });
                 setComments(data);
             } catch (error) {
-                window.alert(error);
+                console.log(error);
             }
         };
         apiData();
-    }, []);
+    }, [isReload, setIsReload]);
 
     return (
         <ArticleContainer>
