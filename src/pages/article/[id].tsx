@@ -195,21 +195,29 @@ export default function Post({ post }: PostProps) {
                 if (!commentId) {
                     const data = {
                         email: commentForm.email,
-                        content: commentForm.content,
-                        postId: post.id,
-                        commentId: commentId,
+                        content: commentForm.content
                     };
-                    await api.post("http://localhost:3000/api/comment", data);
+                    const config = {
+                        headers: {
+                            postid: post.id
+                        },
+                    };
+
+                    await api.post("http://localhost:3000/api/comment", data, config);
                     setIsReload(state => {return state ? false : true});
                     setCommentForm({content:"", email: ""});
                 } else {
                     const data = {
                         email: replyForm.emailReply,
-                        content: replyForm.contentReply,
-                        postId: post.id,
-                        commentId: commentId,
+                        content: replyForm.contentReply,                       
+                    };                    
+                    const config = {
+                        headers: {
+                            postid: post.id,
+                            commentid: commentId
+                        },
                     };
-                    await api.post("http://localhost:3000/api/reply", data);
+                    await api.put("http://localhost:3000/api/reply", data, config);
                     setIsReload(state => {return state ? false : true});
                     setReplyForm({contentReply:"", emailReply: ""});
                 }

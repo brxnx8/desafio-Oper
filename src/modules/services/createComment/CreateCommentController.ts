@@ -6,16 +6,17 @@ class CreateCommentController {
         this.commentRepository = commentRepository;
     }
     async handle(req: NextApiRequest, res: NextApiResponse) {
-        const { email, content, postId } = req.body;
+        const { email, content } = req.body;
+        const { postid } = req.headers;
 
-        if (!email || !content || !postId) {
+        if (!email || !content || !postid) {
             throw new Error("Need all the data to create a comment");
         }
 
         return await this.commentRepository.createComment({
             email,
             content,
-            postId,
+            postId: postid,
         });
     }
 }

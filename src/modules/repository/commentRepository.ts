@@ -6,14 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 export interface CommentsPropsDTO {
     email: string;
     content: string;
-    postId: string;
+    postId: string | string[];
 }
 
 export interface RepliesPropsDTO {
     email: string;
     content: string;
-    postId: string;
-    commentId: string;
+    postId: string | string[];
+    commentId: string | string[];
 }
 
 class CommentRepository {
